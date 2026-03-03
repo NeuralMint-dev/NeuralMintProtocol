@@ -1,0 +1,40 @@
+{
+  "name": "neuralmint",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-generated NFT minting platform on Solana with a Token-2022 token-bound NFT primitive",
+  "license": "MIT",
+  "author": "NeuralMintdev <neuralmintdev@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NeuralMintdev/neuralmint.git"
+  },
+  "workspaces": [
+    "packages/*",
+    "app"
+  ],
+  "engines": {
+    "node": ">=20.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "scripts": {
+    "build": "anchor build",
+    "test": "anchor test",
+    "test:program": "cargo test --manifest-path programs/neuralmint/Cargo.toml",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,json,md}\"",
+    "fmt:rust": "cargo fmt --all"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.3"
+  },
+  "packageManager": "yarn@1.22.22"
+}
