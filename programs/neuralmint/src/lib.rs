@@ -8,6 +8,9 @@
 
 use anchor_lang::prelude::*;
 
+pub mod constants;
+pub mod state;
+
 declare_id!("NMNTkVyB8z9pXq3rJ7wMfZ2cH6tD4sL1aR5nE8gU0Wv");
 
 #[program]
