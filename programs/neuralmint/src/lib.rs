@@ -10,7 +10,10 @@ use anchor_lang::prelude::*;
 
 pub mod constants;
 pub mod errors;
+pub mod instructions;
 pub mod state;
+
+use instructions::*;
 
 declare_id!("NMNTkVyB8z9pXq3rJ7wMfZ2cH6tD4sL1aR5nE8gU0Wv");
 
@@ -18,21 +21,9 @@ declare_id!("NMNTkVyB8z9pXq3rJ7wMfZ2cH6tD4sL1aR5nE8gU0Wv");
 pub mod neuralmint {
     use super::*;
 
-    /// Bootstraps a vault for a freshly minted NFT and binds it to the
-    /// program-derived authority. See subsequent revisions for the full
-    /// account validation surface.
+    /// Create the vault state and program-controlled token account bound to a
+    /// freshly minted NFT.
     pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
-        msg!("neuralmint: initialize vault for mint {}", ctx.accounts.nft_mint.key());
-        Ok(())
+        instructions::initialize::handler(ctx)
     }
-}
-
-#[derive(Accounts)]
-pub struct Initialize<'info> {
-    /// The NFT mint whose pubkey seeds the vault authority PDA.
-    /// CHECK: validated against vault state in later revisions.
-    pub nft_mint: UncheckedAccount<'info>,
-    #[account(mut)]
-    pub payer: Signer<'info>,
-    pub system_program: Program<'info, System>,
 }
