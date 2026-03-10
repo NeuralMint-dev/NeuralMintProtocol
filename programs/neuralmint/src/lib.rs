@@ -26,4 +26,9 @@ pub mod neuralmint {
     pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
         instructions::initialize::handler(ctx)
     }
+
+    /// Lock the fixed $NMINT amount behind the NFT vault.
+    pub fn wrap(ctx: Context<Wrap>) -> Result<()> {
+        instructions::wrap::handler(ctx)
+    }
 }
