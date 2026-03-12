@@ -31,4 +31,9 @@ pub mod neuralmint {
     pub fn wrap(ctx: Context<Wrap>) -> Result<()> {
         instructions::wrap::handler(ctx)
     }
+
+    /// Release the locked $NMINT to the current NFT holder.
+    pub fn unwrap(ctx: Context<Unwrap>) -> Result<()> {
+        instructions::unwrap::handler(ctx)
+    }
 }
