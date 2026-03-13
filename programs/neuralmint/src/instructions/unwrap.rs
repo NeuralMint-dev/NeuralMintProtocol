@@ -67,9 +67,9 @@ pub fn handler(ctx: Context<Unwrap>) -> Result<()> {
 
     let amount = ctx.accounts.vault.locked_amount;
     let nft_mint_key = ctx.accounts.nft_mint.key();
-    let authority_bump = ctx.accounts.vault.authority_bump;
-    let signer_seeds: &[&[&[u8]]] =
-        &[&[VAULT_AUTHORITY_SEED, nft_mint_key.as_ref(), &[authority_bump]]];
+    let authority_bump = [ctx.accounts.vault.authority_bump];
+    let seeds = crate::utils::authority_signer_seeds(&nft_mint_key, &authority_bump);
+    let signer_seeds: &[&[&[u8]]] = &[&seeds];
 
     let cpi_accounts = TransferChecked {
         from: ctx.accounts.vault_token_account.to_account_info(),
