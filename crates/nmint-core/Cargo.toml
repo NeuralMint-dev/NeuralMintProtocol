@@ -1,0 +1,18 @@
+[package]
+name = "nmint-core"
+version = { workspace = true }
+edition = { workspace = true }
+authors = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+description = "Standalone vault math and PDA derivation shared by the program, SDK tooling and tests"
+
+[lib]
+name = "nmint_core"
+
+[dependencies]
+solana-program = "1.18.17"
+thiserror = "1.0.58"
+
+[dev-dependencies]
+proptest = "1.4.0"
