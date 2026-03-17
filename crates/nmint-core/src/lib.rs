@@ -12,7 +12,9 @@
 #![deny(missing_docs)]
 #![forbid(unsafe_code)]
 
+pub mod math;
 pub mod pda;
+pub mod vault;
 
 /// Seed prefix for the vault authority PDA.
 pub const VAULT_AUTHORITY_SEED: &[u8] = b"vault-authority";
@@ -23,4 +25,6 @@ pub const VAULT_STATE_SEED: &[u8] = b"vault-state";
 /// Canonical locked amount in base units (1,000,000 tokens at 6 decimals).
 pub const LOCKED_AMOUNT: u64 = 1_000_000_000_000;
 
+pub use math::{checked_deposit, checked_withdraw, ui_amount, MathError};
 pub use pda::{vault_authority, vault_state, VaultAddresses};
+pub use vault::{VaultLedger, VaultStatus};
