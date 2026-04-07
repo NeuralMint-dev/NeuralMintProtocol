@@ -26,5 +26,5 @@ pub const VAULT_STATE_SEED: &[u8] = b"vault-state";
 pub const LOCKED_AMOUNT: u64 = 1_000_000_000_000;
 
 pub use math::{checked_deposit, checked_withdraw, ui_amount, MathError};
-pub use pda::{vault_authority, vault_state, VaultAddresses};
+pub use pda::{vault_authority, vault_authority_with_bump, vault_state, VaultAddresses};
 pub use vault::{VaultLedger, VaultStatus};

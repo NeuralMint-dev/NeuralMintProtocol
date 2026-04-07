@@ -1,6 +1,6 @@
 //! Program-derived address helpers.
 
-use solana_program::pubkey::Pubkey;
+use solana_program::pubkey::{Pubkey, PubkeyError};
 
 use crate::{VAULT_AUTHORITY_SEED, VAULT_STATE_SEED};
 
@@ -39,4 +39,21 @@ pub fn vault_authority(nft_mint: &Pubkey, program_id: &Pubkey) -> (Pubkey, u8) {
 /// Derives the vault state PDA and bump for `nft_mint`.
 pub fn vault_state(nft_mint: &Pubkey, program_id: &Pubkey) -> (Pubkey, u8) {
     Pubkey::find_program_address(&[VAULT_STATE_SEED, nft_mint.as_ref()], program_id)
+}
+
+/// Reconstructs the vault authority PDA from a previously stored bump.
+///
+/// `find_program_address` iterates from bump 255 downward and hashes on each
+/// attempt; once the canonical bump is known (it is persisted on the vault
+/// state account) we can skip straight to a single `create_program_address`
+/// call, which is markedly cheaper on the compute-budget-constrained hot path.
+pub fn vault_authority_with_bump(
+    nft_mint: &Pubkey,
+    bump: u8,
+    program_id: &Pubkey,
+) -> Result<Pubkey, PubkeyError> {
+    Pubkey::create_program_address(
+        &[VAULT_AUTHORITY_SEED, nft_mint.as_ref(), &[bump]],
+        program_id,
+    )
 }
