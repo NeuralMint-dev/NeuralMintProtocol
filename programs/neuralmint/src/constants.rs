@@ -17,3 +17,7 @@ pub const LOCKED_AMOUNT: u64 = 1_000_000_000_000;
 
 /// Decimals used by the $NMINT mint.
 pub const NMINT_DECIMALS: u8 = 6;
+
+/// Expected balance of an NFT holding account that gates a vault. NFTs are
+/// non-fungible, so the gating account must contain exactly one unit.
+pub const NFT_GATING_BALANCE: u64 = 1;

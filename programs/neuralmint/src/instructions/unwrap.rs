@@ -10,7 +10,7 @@ use anchor_spl::token_interface::{
     transfer_checked, Mint, TokenAccount, TokenInterface, TransferChecked,
 };
 
-use crate::constants::{VAULT_AUTHORITY_SEED, VAULT_STATE_SEED};
+use crate::constants::{NFT_GATING_BALANCE, VAULT_AUTHORITY_SEED, VAULT_STATE_SEED};
 use crate::errors::NeuralMintError;
 use crate::state::Vault;
 
@@ -46,7 +46,7 @@ pub struct Unwrap<'info> {
     #[account(
         constraint = nft_holder_account.mint == nft_mint.key() @ NeuralMintError::NftMintMismatch,
         constraint = nft_holder_account.owner == holder.key() @ NeuralMintError::UnauthorizedHolder,
-        constraint = nft_holder_account.amount == 1 @ NeuralMintError::InvalidNftBalance,
+        constraint = nft_holder_account.amount == NFT_GATING_BALANCE @ NeuralMintError::InvalidNftBalance,
     )]
     pub nft_holder_account: InterfaceAccount<'info, TokenAccount>,
 
