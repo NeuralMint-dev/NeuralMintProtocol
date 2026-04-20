@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security disclosure
+    url: https://github.com/NeuralMintdev/neuralmint/security/advisories/new
+    about: Report vulnerabilities privately via GitHub Security Advisories.
+  - name: Discussions
+    url: https://github.com/NeuralMintdev/neuralmint/discussions
+    about: Ask questions and share ideas with the community.
