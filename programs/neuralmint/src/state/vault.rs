@@ -32,4 +32,14 @@ pub struct Vault {
 impl Vault {
     /// Discriminator (8) + fields.
     pub const LEN: usize = 8 + 32 + 32 + 32 + 8 + 1 + 1 + 8 + 1;
+
+    /// Returns true when the vault currently custodies the locked balance.
+    pub fn is_active(&self) -> bool {
+        self.is_funded && self.locked_amount > 0
+    }
+
+    /// Returns true when the supplied NFT mint matches this vault's binding.
+    pub fn matches_nft(&self, nft_mint: &Pubkey) -> bool {
+        self.nft_mint == *nft_mint
+    }
 }
