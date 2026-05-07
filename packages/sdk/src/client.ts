@@ -103,6 +103,23 @@ export class NeuralMintClient {
     }
   }
 
+  /**
+   * Returns whether a vault exists and is currently funded. Unlike
+   * {@link fetchVault}, a missing vault resolves to `false` rather than
+   * throwing, which suits UI gating where absence is an expected state.
+   */
+  async isVaultFunded(nftMint: PublicKey): Promise<boolean> {
+    try {
+      const vault = await this.fetchVault(nftMint);
+      return vault.isFunded && vault.lockedAmount > 0n;
+    } catch (error) {
+      if (error instanceof VaultNotFoundError) {
+        return false;
+      }
+      throw error;
+    }
+  }
+
   private async toTransaction(instruction: TransactionInstruction): Promise<Transaction> {
     const { blockhash } = await this.connection.getLatestBlockhash(this.commitment);
     const tx = new Transaction({ recentBlockhash: blockhash, feePayer: null });
