@@ -43,3 +43,35 @@ export function revealTimeline(targets: gsap.TweenTarget): gsap.core.Timeline {
   });
   return tl;
 }
+
+/**
+ * Attaches a magnetic hover effect to an element: the target eases toward the
+ * pointer within a bounded radius and springs back on leave. Returns a cleanup
+ * function that removes listeners and kills the active tween.
+ */
+export function attachMagnetic(element: HTMLElement, strength = 0.35): () => void {
+  const quickX = gsap.quickTo(element, 'x', { duration: 0.4, ease: 'power3.out' });
+  const quickY = gsap.quickTo(element, 'y', { duration: 0.4, ease: 'power3.out' });
+
+  const onMove = (event: PointerEvent) => {
+    const rect = element.getBoundingClientRect();
+    const relX = event.clientX - (rect.left + rect.width / 2);
+    const relY = event.clientY - (rect.top + rect.height / 2);
+    quickX(relX * strength);
+    quickY(relY * strength);
+  };
+
+  const onLeave = () => {
+    quickX(0);
+    quickY(0);
+  };
+
+  element.addEventListener('pointermove', onMove);
+  element.addEventListener('pointerleave', onLeave);
+
+  return () => {
+    element.removeEventListener('pointermove', onMove);
+    element.removeEventListener('pointerleave', onLeave);
+    gsap.killTweensOf(element);
+  };
+}
