@@ -33,4 +33,7 @@ pub enum NeuralMintError {
 
     #[msg("Bump seed could not be resolved for the requested PDA")]
     BumpNotFound,
+
+    #[msg("Mint carries an unsupported Token-2022 extension (e.g. transfer fee)")]
+    UnsupportedMintExtension,
 }
