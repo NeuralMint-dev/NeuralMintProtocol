@@ -12,7 +12,7 @@ name = "nmint_core"
 
 [dependencies]
 solana-program = "1.18.17"
-thiserror = "1.0.58"
+thiserror = "2.0.18"
 
 [dev-dependencies]
 proptest = "1.4.0"
