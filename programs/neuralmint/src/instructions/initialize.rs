@@ -8,6 +8,7 @@ use anchor_spl::{
 };
 
 use crate::constants::{VAULT_AUTHORITY_SEED, VAULT_STATE_SEED};
+use crate::errors::NeuralMintError;
 use crate::state::Vault;
 
 #[derive(Accounts)]
@@ -56,6 +57,23 @@ pub struct Initialize<'info> {
 }
 
 pub fn handler(ctx: Context<Initialize>) -> Result<()> {
+    // Reject mints carrying a transfer fee: the in-flight deduction would make
+    // the recorded locked_amount diverge from the actual vault balance (#12).
+    {
+        use anchor_spl::token_2022::spl_token_2022::extension::{
+            transfer_fee::TransferFeeConfig, BaseStateWithExtensions, StateWithExtensions,
+        };
+        use anchor_spl::token_2022::spl_token_2022::state::Mint as MintState;
+
+        let mint_info = ctx.accounts.token_mint.to_account_info();
+        let mint_data = mint_info.try_borrow_data()?;
+        let mint_state = StateWithExtensions::<MintState>::unpack(&mint_data)?;
+        require!(
+            mint_state.get_extension::<TransferFeeConfig>().is_err(),
+            NeuralMintError::UnsupportedMintExtension
+        );
+    }
+
     let vault = &mut ctx.accounts.vault;
 
     vault.nft_mint = ctx.accounts.nft_mint.key();
