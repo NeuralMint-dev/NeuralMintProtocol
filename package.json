@@ -28,7 +28,7 @@
     "fmt:rust": "cargo fmt --all"
   },
   "devDependencies": {
-    "@coral-xyz/anchor": "^0.30.1",
+    "@coral-xyz/anchor": "^0.32.1",
     "@solana/spl-token": "^0.4.6",
     "@solana/web3.js": "^1.91.4",
     "@types/chai": "^4.3.14",
