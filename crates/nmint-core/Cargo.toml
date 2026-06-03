@@ -11,7 +11,7 @@ description = "Standalone vault math and PDA derivation shared by the program, S
 name = "nmint_core"
 
 [dependencies]
-solana-program = "1.18.17"
+solana-program = "4.0.0"
 thiserror = "1.0.58"
 
 [dev-dependencies]
